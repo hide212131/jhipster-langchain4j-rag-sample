@@ -90,11 +90,15 @@ public class JhipsterApp {
 
             ----------------------------------------------------------
             \tApplication '{}' is running! Access URLs:
+            \tChat: \t\t{}://localhost:{}{}chat-ui/index.html
             \tLocal: \t\t{}://localhost:{}{}
             \tExternal: \t{}://{}:{}{}
             \tProfile(s): \t{}
             ----------------------------------------------------------""",
             applicationName,
+            protocol,
+            serverPort,
+            contextPath,
             protocol,
             serverPort,
             contextPath,

@@ -47,10 +47,13 @@
         <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
         <jib-maven-plugin.image>eclipse-temurin:17-jre-focal</jib-maven-plugin.image>
         <jib-maven-plugin.version>3.4.3</jib-maven-plugin.version>
+        <langchain4j.version>0.33.0</langchain4j.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <liquibase-plugin.password/>
         <liquibase-plugin.url/>
         <liquibase-plugin.username/>
+        <llm.model.home>${user.home}/.cache/jhipster-llm/models}</llm.model.home>
+        <llm.model.name>qwen2:7b-instruct</llm.model.name>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <maven-checkstyle-plugin.version>3.4.0</maven-checkstyle-plugin.version>
@@ -73,6 +76,7 @@
         <profile.test/>
         <profile.tls/>
         <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
+        <reactor.version>3.6.4</reactor.version>
         <sonar-maven-plugin.version>4.0.0.4121</sonar-maven-plugin.version>
         <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
         <springdoc-openapi-starter-webmvc-api.version>2.5.0</springdoc-openapi-starter-webmvc-api.version>
@@ -202,8 +206,23 @@
             <artifactId>HikariCP</artifactId>
         </dependency>
         <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-ollama-spring-boot-starter</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus-simpleclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>${reactor.version}</version>
         </dependency>
         <dependency>
             <groupId>jakarta.annotation</groupId>
@@ -782,6 +801,9 @@
                     <groupId>org.openapitools</groupId>
                     <artifactId>openapi-generator-maven-plugin</artifactId>
                     <version>${openapi-generator-maven-plugin.version}</version>
+                    <configuration>
+                        <typeMappings>integer=Long,int=Long</typeMappings>
+                    </configuration>
                     <executions>
                         <execution>
                             <goals>
@@ -798,6 +820,9 @@
                                     <delegatePattern>true</delegatePattern>
                                     <title>jhipster</title>
                                     <useSpringBoot3>true</useSpringBoot3>
+                                    <interfaceOnly>true</interfaceOnly>
+                                    <openApiNullable>false</openApiNullable>
+                                    <reactive>true</reactive>
                                 </configOptions>
                             </configuration>
                         </execution>
@@ -1159,6 +1184,17 @@
                                         <APP_VERSION>${project.version}</APP_VERSION>
                                     </environmentVariables>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>Download the integration test model if it doesn&apos;t exist</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run llm:ollama pull ${llm.model.name}</arguments>
+                                    <skip>false</skip>
                                 </configuration>
                             </execution>
                         </executions>

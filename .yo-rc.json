@@ -2,8 +2,16 @@
   "generator-jhipster": {
     "applicationType": "monolith",
     "baseName": "jhipster",
+    "blueprints": [
+      {
+        "name": "generator-jhipster-llm",
+        "version": "0.1.1"
+      }
+    ],
+    "buildTool": "maven",
     "cacheProvider": "no",
     "clientFramework": "react",
+    "creationTimestamp": 1723971431753,
     "databaseType": "sql",
     "devDatabaseType": "postgresql",
     "devServerPort": 9060,
@@ -15,6 +23,14 @@
     "languages": ["en"],
     "lastLiquibaseTimestamp": 1723971376000,
     "nativeLanguage": "en",
-    "prodDatabaseType": "postgresql"
+    "prodDatabaseType": "postgresql",
+    "skipCommitHook": true,
+    "skipJhipsterDependencies": true
+  },
+  "generator-jhipster-llm": {
+    "enableRAG": false,
+    "llmFramework": "langchain4j",
+    "llmLibrary": "ollama",
+    "llmModelName": "qwen2:7b-instruct"
   }
 }

@@ -1,0 +1,9 @@
+application {
+  config {
+    applicationType monolith
+    databaseType no
+    clientFramework react
+    enableSwaggerCodegen true
+    cacheProvider no
+  }
+}
