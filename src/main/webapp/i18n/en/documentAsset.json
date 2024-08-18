@@ -1,0 +1,25 @@
+{
+  "jhipsterApp": {
+    "documentAsset": {
+      "home": {
+        "title": "Document Assets",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Document Asset",
+        "createOrEditLabel": "Create or edit a Document Asset",
+        "notFound": "No Document Assets found"
+      },
+      "created": "A new Document Asset is created with identifier {{ param }}",
+      "updated": "A Document Asset is updated with identifier {{ param }}",
+      "deleted": "A Document Asset is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Document Asset {{ id }}?"
+      },
+      "detail": {
+        "title": "Document Asset"
+      },
+      "id": "ID",
+      "filename": "Filename",
+      "data": "Data"
+    }
+  }
+}

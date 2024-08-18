@@ -1,0 +1,20 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "baseName": "jhipster",
+    "cacheProvider": "no",
+    "clientFramework": "react",
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "devServerPort": 9060,
+    "enableHibernateCache": false,
+    "enableSwaggerCodegen": true,
+    "entities": ["DocumentAsset"],
+    "jhipsterVersion": "8.6.0",
+    "jwtSecretKey": "ZDU0OTJiNTVjOGExODExNDdmNDEwNmRlNzIxZDgxYTg3NzYyNjc3ODIwODg5YjNkYjdjNWMwOWI5Nzc2MTA3YWVkODQ5NjVjMTVkNGZmOWEyZDBjNzI4MWYwOTkzNmNjNzQzMjZlOTgxNzUzZmQyMGRkOGQ2NGMzNmFmZTE1NjY=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1723971376000,
+    "nativeLanguage": "en",
+    "prodDatabaseType": "postgresql"
+  }
+}
