@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest.chat;
 
+import com.mycompany.myapp.service.RAGService;
 import com.mycompany.myapp.service.api.dto.*;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.SystemMessage;
@@ -22,7 +23,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class ChatApiController implements ChatApi {
 
     private final StreamingChatLanguageModel chatClient;
-
     public ChatApiController(StreamingChatLanguageModel chatClient) {
         this.chatClient = chatClient;
     }

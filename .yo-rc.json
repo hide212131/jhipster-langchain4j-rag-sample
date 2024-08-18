@@ -28,9 +28,9 @@
     "skipJhipsterDependencies": true
   },
   "generator-jhipster-llm": {
-    "enableRAG": false,
+    "enableRAG": true,
     "llmFramework": "langchain4j",
     "llmLibrary": "ollama",
-    "llmModelName": "qwen2:7b-instruct"
+    "llmModelName": "phi3.5"
   }
 }

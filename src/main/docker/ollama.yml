@@ -6,4 +6,4 @@ services:
     ports:
       - 11434:11434
     volumes:
-      - ./ollama:/root/.ollama
+      - $HOME/.ollama:/root/.ollama

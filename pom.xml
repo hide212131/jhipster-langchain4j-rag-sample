@@ -53,7 +53,8 @@
         <liquibase-plugin.url/>
         <liquibase-plugin.username/>
         <llm.model.home>${user.home}/.cache/jhipster-llm/models}</llm.model.home>
-        <llm.model.name>qwen2:7b-instruct</llm.model.name>
+        <llm.model.name>phi3.5</llm.model.name>
+        <llm.embedded.model.name>bge-m3</llm.embedded.model.name>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <maven-checkstyle-plugin.version>3.4.0</maven-checkstyle-plugin.version>
@@ -213,6 +214,16 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-ollama-spring-boot-starter</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-pgvector</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-document-parser-apache-pdfbox</artifactId>
             <version>${langchain4j.version}</version>
         </dependency>
         <dependency>
@@ -1194,6 +1205,17 @@
                                 </goals>
                                 <configuration>
                                     <arguments>run llm:ollama pull ${llm.model.name}</arguments>
+                                    <skip>false</skip>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>Download the integration embedded model if it doesn&apos;t exist</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run llm:ollama pull ${llm.embedded.model.name}</arguments>
                                     <skip>false</skip>
                                 </configuration>
                             </execution>
