@@ -20,8 +20,11 @@ public class DocumentAssetService {
 
     private final DocumentAssetRepository documentAssetRepository;
 
-    public DocumentAssetService(DocumentAssetRepository documentAssetRepository) {
+    private final RAGService ragService;
+
+    public DocumentAssetService(DocumentAssetRepository documentAssetRepository, RAGService ragService) {
         this.documentAssetRepository = documentAssetRepository;
+        this.ragService = ragService;
     }
 
     /**
@@ -32,7 +35,8 @@ public class DocumentAssetService {
      */
     public DocumentAsset save(DocumentAsset documentAsset) {
         log.debug("Request to save DocumentAsset : {}", documentAsset);
-        return documentAssetRepository.save(documentAsset);
+        documentAssetRepository.save(documentAsset);
+        return ragService.storeFile(documentAsset);
     }
 
     /**
@@ -43,7 +47,8 @@ public class DocumentAssetService {
      */
     public DocumentAsset update(DocumentAsset documentAsset) {
         log.debug("Request to update DocumentAsset : {}", documentAsset);
-        return documentAssetRepository.save(documentAsset);
+        documentAssetRepository.save(documentAsset);
+        return ragService.storeFile(documentAsset);
     }
 
     /**

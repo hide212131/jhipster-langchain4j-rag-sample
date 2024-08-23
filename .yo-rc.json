@@ -31,6 +31,6 @@
     "enableRAG": true,
     "llmFramework": "langchain4j",
     "llmLibrary": "ollama",
-    "llmModelName": "phi3.5"
+    "llmModelName": "mistral"
   }
 }

@@ -1,10 +1,6 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
 name: jhipster
 services:
-  ollama:
-    extends:
-      file: ./ollama.yml
-      service: ollama
   postgresql:
     extends:
       file: ./postgresql.yml

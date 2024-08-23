@@ -23,8 +23,12 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public class ChatApiController implements ChatApi {
 
     private final StreamingChatLanguageModel chatClient;
-    public ChatApiController(StreamingChatLanguageModel chatClient) {
+
+    private final RAGService ragService;
+
+    public ChatApiController(StreamingChatLanguageModel chatClient, RAGService ragService) {
         this.chatClient = chatClient;
+        this.ragService = ragService;
     }
 
     @Override
@@ -44,6 +48,8 @@ public class ChatApiController implements ChatApi {
                 }
             })
             .toList();
+
+        messages = ragService.retrieveAndGeneratePrompt(messages);
 
         SseEmitter emitter = new SseEmitter(180000L);
         chatClient.generate(

@@ -220,16 +220,16 @@ jhipster:
 langchain4j:
   ollama:
     chat-model:
-      model-name: phi3.5
-      base-url: ${OLLAMA_URL:http://localhost:11434/}
+      model-name: mistral
+      base-url: ${OLLAMA_URL:http://127.0.0.1:11434/}
     streaming-chat-model:
-      model-name: phi3.5
-      base-url: ${OLLAMA_URL:http://localhost:11434/}
+      model-name: mistral
+      base-url: ${OLLAMA_URL:http://127.0.0.1:11434/}
     language-model:
-      model-name: phi3.5
-      base-url: ${OLLAMA_URL:http://localhost:11434/}
+      model-name: mistral
+      base-url: ${OLLAMA_URL:http://127.0.0.1:11434/}
     embedding-model:
       model-name: bge-m3
-      base-url: ${OLLAMA_URL:http://localhost:11434/}
+      base-url: ${OLLAMA_URL:http://127.0.0.1:11434/}
 
 openapi.my-llm-app.base-path: /api/llm/v1
