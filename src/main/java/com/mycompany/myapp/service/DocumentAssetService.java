@@ -108,6 +108,7 @@ public class DocumentAssetService {
      */
     public void delete(Long id) {
         log.debug("Request to delete DocumentAsset : {}", id);
+        ragService.deleteFile(id);
         documentAssetRepository.deleteById(id);
     }
 }

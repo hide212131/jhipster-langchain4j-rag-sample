@@ -53,6 +53,7 @@ public class RAGService {
 
         DocumentParser parser = new ApachePdfBoxDocumentParser();
         Document document = parser.parse(new ByteArrayInputStream(savedFile.getData()));
+        document.metadata().put("documentAssetId", savedFile.getId().toString());
 
         DocumentSplitter splitter = DocumentSplitters.recursive(300, 0);
         List<TextSegment> segments = splitter.split(document);
@@ -65,8 +66,8 @@ public class RAGService {
     public void deleteFile(Long id) {
         DocumentAsset document = documentAssetRepository.findById(id).orElse(null);
         if (document != null) {
-            String deleteSql = "DELETE FROM vector_store WHERE metadata->>'id' = ?";
-            jdbcTemplate.update(deleteSql, document.getId());
+            String deleteSql = "DELETE FROM vector_store WHERE metadata->>'documentAssetId' = ?";
+            jdbcTemplate.update(deleteSql, document.getId().toString());
             documentAssetRepository.deleteById(id);
         }
     }
