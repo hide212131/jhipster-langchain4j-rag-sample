@@ -31,6 +31,6 @@
     "enableRAG": true,
     "llmFramework": "langchain4j",
     "llmLibrary": "ollama",
-    "llmModelName": "mistral"
+    "llmModelName": "gemma2"
   }
 }

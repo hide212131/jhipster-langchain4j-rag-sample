@@ -53,7 +53,7 @@
         <liquibase-plugin.url/>
         <liquibase-plugin.username/>
         <llm.model.home>${user.home}/.cache/jhipster-llm/models}</llm.model.home>
-        <llm.model.name>mistral</llm.model.name>
+        <llm.model.name>gemma2</llm.model.name>
         <llm.embedded.model.name>bge-m3</llm.embedded.model.name>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
