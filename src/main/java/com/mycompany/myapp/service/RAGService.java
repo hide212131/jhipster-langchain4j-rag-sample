@@ -1,14 +1,19 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.DocumentAsset;
+import com.mycompany.myapp.domain.graphrag.Entity;
 import com.mycompany.myapp.repository.DocumentAssetRepository;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import com.mycompany.myapp.service.graphrag.EntityExtractionAssistant;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentParser;
 import dev.langchain4j.data.document.DocumentSplitter;
@@ -27,6 +32,8 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @Service
 public class RAGService {
@@ -35,21 +42,23 @@ public class RAGService {
     private final EmbeddingStore<TextSegment> vectorStore;
     private final JdbcTemplate jdbcTemplate;
     private final EmbeddingModel embeddingModel;
+    private final EntityExtractionAssistant entityExtractionAssistant;
 
     public RAGService(
         DocumentAssetRepository documentAssetRepository,
         EmbeddingStore<TextSegment> vectorStore,
         JdbcTemplate jdbcTemplate,
-        EmbeddingModel embeddingModel
+        EmbeddingModel embeddingModel,
+        EntityExtractionAssistant entityExtractionAssistant
     ) {
         this.documentAssetRepository = documentAssetRepository;
         this.vectorStore = vectorStore;
         this.jdbcTemplate = jdbcTemplate;
         this.embeddingModel = embeddingModel;
+        this.entityExtractionAssistant = entityExtractionAssistant;
     }
 
-    public DocumentAsset storeFile(DocumentAsset documentAsset) {
-        DocumentAsset savedFile = documentAssetRepository.save(documentAsset);
+    public DocumentAsset storeFile(DocumentAsset savedFile) {
 
         DocumentParser parser = new ApachePdfBoxDocumentParser();
         Document document = parser.parse(new ByteArrayInputStream(savedFile.getData()));
@@ -57,6 +66,20 @@ public class RAGService {
 
         DocumentSplitter splitter = DocumentSplitters.recursive(300, 0);
         List<TextSegment> segments = splitter.split(document);
+
+        Gson gson = new Gson();
+        String examples = gson.toJson(Arrays.asList(
+            new Entity("name1", "type1", "description1"),
+            new Entity("name2", "type2", "description2")
+        ));
+
+        List<Entity> entities = segments.stream()
+            .map(TextSegment::text)
+            .map(text -> entityExtractionAssistant.extractEntities(text, List.of("Person", "Organization", "Location"), "en", examples))
+            .reduce(new ArrayList<>(), (acc, list) -> {
+                acc.addAll(list);
+                return acc;
+            });
 
         List<Embedding> embeddings = embeddingModel.embedAll(segments).content();
         vectorStore.addAll(embeddings, segments);

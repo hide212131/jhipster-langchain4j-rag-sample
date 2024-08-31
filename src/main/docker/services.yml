@@ -5,3 +5,7 @@ services:
     extends:
       file: ./postgresql.yml
       service: postgresql
+  neo4j:
+    extends:
+      file: ./neo4j.yml
+      service: neo4j
